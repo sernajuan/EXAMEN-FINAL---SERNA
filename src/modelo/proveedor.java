@@ -15,6 +15,9 @@ public class proveedor {
         this.estado = estado;
     }
 
+    public proveedor() {
+    }
+
     public proveedor(String nombre, String ruc, String direccion, String estado) {
         this.nombre = nombre;
         this.ruc = ruc;

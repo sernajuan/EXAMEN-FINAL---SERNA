@@ -1,13 +1,13 @@
-
 package vistacontrol;
 
 import java.util.List;
 import modelo.producto;
+import modelo.proveedor;
 import modeloDAO.productoDAO;
+import modeloDAO.proveedorDAO;
 import utils.Leer;
 
 public class index {
-    
     public static void Agregarproducto(){
         String codigo;
         String nombre;
@@ -30,6 +30,27 @@ public class index {
         productoDAO.agregarproducto(producto);
         
     }
+     public static void Agregarproveedor(){
+        
+        String nombre;
+        String ruc;
+        String direccion;
+        String estado;
+        System.out.println("Agregar Nuevo proveedor");
+        System.out.print("Nombre: ");
+        nombre = Leer.cadena();
+        System.out.print("Ruc: ");
+        ruc = Leer.cadena();
+        System.out.print("Direccion: ");
+        direccion =  Leer.cadena();
+        System.out.print("Estado: ");
+        estado = Leer.cadena();
+        
+        proveedor proveedor = new proveedor(nombre, ruc,direccion, estado);
+        proveedorDAO proveedorDAO = new proveedorDAO();
+        proveedorDAO.agregarproveedor(proveedor);
+        
+    }
     public static void Eliminarproducto(){
         Listarproducto();
         System.out.print("Ingrese el ID del producto a Eliminar: ");
@@ -37,7 +58,16 @@ public class index {
         productoDAO productoDAO = new productoDAO();
         productoDAO.eliminarproducto(id);
     }
-    public static void Editarproducto(){
+     public static void Eliminarproveedor(){
+        Listarproveedor();
+        System.out.print("Ingrese el ID del proveedor a Eliminar: ");
+        int id = Leer.entero();
+        proveedorDAO proveedorDAO = new proveedorDAO();
+        proveedorDAO.eliminarproveedor(id);
+        
+    }
+     
+     public static void Editarproducto(){
         Listarproducto();
         System.out.print("Ingrese el ID del producto a Editar: ");
         int id = Leer.entero();
@@ -61,7 +91,30 @@ public class index {
         productoDAO productoDAO = new productoDAO();
         productoDAO.editarproducto(producto);
     }
-    public static void Listarproducto(){
+    public static void Editarproveedor(){
+        Listarproveedor();
+        System.out.print("Ingrese el ID del proveedor a Editar: ");
+        int id = Leer.entero();
+        String nombre;
+        String ruc;
+        String direccion;
+        String estado;
+        
+        System.out.println("Editar proveedor");
+        System.out.print("Nuevo Nombre: ");
+        nombre = Leer.cadena();
+        System.out.print("Nueva Ruc: ");
+        ruc = Leer.cadena();
+        System.out.print("Nueva Direccion: ");
+        direccion =  Leer.cadena();
+        System.out.print("Nuevo Estado: ");
+        estado = Leer.cadena();
+       
+        proveedor proveedor = new proveedor(id,  nombre, ruc, direccion, estado);
+        proveedorDAO proveedorDAO = new proveedorDAO();
+        proveedorDAO.editarproveedor(proveedor);
+    }
+     public static void Listarproducto(){
         productoDAO productoDAO = new productoDAO();
         List<producto> productos = productoDAO.listarproducto();
         System.out.println("ID\tCodigo\t\tNombre\t\tPrecio\t\tStock\t\tEstado");
@@ -89,9 +142,31 @@ public class index {
         return cadena;
     }
     
+    public static void Listarproveedor(){
+        proveedorDAO proveedorDAO = new proveedorDAO();
+        List<proveedor> proveedores = proveedorDAO.listarproveedor();
+        System.out.println("ID\tNombre\t\tRuc\t\tDireccion\t\tEstado");
+        for (proveedor proveedor : proveedores) {
+            System.out.println( proveedor.getIdproveedor()+ "\t" + 
+                                darFormato(proveedor.getNombre()) + "\t" + 
+                                proveedor.getRuc() + "\t" +
+                                proveedor.getDireccion()+ "\t" +
+                               
+                                proveedor.getEstado());            
+        }
+        
+    }
+
+    
     public static void salir(){
         System.out.println("Gracias por su visita");
     }
+    
+    public static void atras(){
+        inicio();
+    }
+    
+    
     public static void error(int tipo){
         switch(tipo){
             case 1:
@@ -115,22 +190,32 @@ public class index {
         System.out.println("2. Eliminar producto");
         System.out.println("3. Editar producto");
         System.out.println("4. Listar producto");
-        System.out.println("5. Salir");
+        System.out.println("5. Atras");
+        System.out.print("Elegir las opciones [1-5]: ");
+        
+    }
+    public static void menuproveedor(){
+        System.out.println("1. Agregar proveedor");
+        System.out.println("2. Eliminar proveedor");
+        System.out.println("3. Editar proveedor");
+        System.out.println("4. Listar proveedor");
+        System.out.println("5. Atras");
         System.out.print("Elegir las opciones [1-5]: ");
         
     }
     public static void inicio(){
         int opcion;
-        do { 
             menu();
             System.out.println("INGRESAR VALOR");
             opcion=Leer.entero();
-            if(opcion == 1){
-                menuproducto();
-            }
-            opcion = Leer.entero();
+            //if(opcion == 1){
             switch(opcion){
-                case 1:
+                case 1 : 
+                menuproducto();
+                int producto;
+                producto=Leer.entero();
+                switch(producto){
+                    case 1:
                     Agregarproducto();
                     break;
                 case 2:
@@ -143,12 +228,39 @@ public class index {
                     Listarproducto();
                     break;
                 case 5:
-                    salir();
+                    atras();
                     break;
                 default:
-                    error(1);
-            }            
-        } while (opcion!=5);
+                    error(1);   
+                }
+                break ;
+                
+                case 2 :
+                    //pones tus datos
+                    switch(opcion){
+                    case 1:
+                    Agregarproveedor();
+                    break;
+                case 2:
+                    Eliminarproveedor();
+                    break;
+                case 3:
+                    Editarproveedor();
+                    break;
+                case 4:
+                    Listarproveedor();
+                    break;
+                case 5:
+                    atras();
+                    break;
+                default:
+         
+                    
+                    break;
+                    
+            }
+            
+    }
     }
          
     public static void main(String[] args) {

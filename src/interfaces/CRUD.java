@@ -10,4 +10,10 @@ public interface CRUD {
     public boolean agregarproducto(producto producto);
     public boolean editarproducto(producto producto);
     public boolean eliminarproducto(int idproducto);
+    
+    public List listarproveedor();
+    public proveedor buscarproveedor(int idproveedor);
+    public boolean agregarproveedor(proveedor proveedor);
+    public boolean editarproveedor(proveedor proveedor);
+    public boolean eliminarproveedor(int idproveedor);
 }
