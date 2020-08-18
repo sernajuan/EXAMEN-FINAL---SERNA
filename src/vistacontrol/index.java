@@ -233,11 +233,14 @@ public class index {
                 default:
                     error(1);   
                 }
-                break ;
+                
                 
                 case 2 :
+                     menuproveedor();
+                int proveedor;
+                proveedor=Leer.entero();
                     //pones tus datos
-                    switch(opcion){
+                    switch(proveedor){
                     case 1:
                     Agregarproveedor();
                     break;
